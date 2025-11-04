@@ -1,0 +1,44 @@
+# git-modules
+.vscode
+
+# build and setup files maintained on separate branch
+makefile
+requirements.txt
+setup.py
+
+# README.md
+README.md
+
+# tmp files and directories
+*tmp/
+*temp/
+*.tmp
+*.temp
+
+# log files and directories
+*log/
+*logs/
+*.log
+
+# archive files
+*.tar
+*.tgz
+*.zip
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# virtualenv
+.venv/
+venv/
+ENV/
+
+# byte-compiled / optimized / DLL files
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*$py.class
+*.so
