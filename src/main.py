@@ -1,3 +1,4 @@
+from .calculator import main as main_
 
 def main():
-    print(f'main_calculator()')
+    main_()
