@@ -1,18 +1,17 @@
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 <!-- Solution of Assignment A2 (CS4BD)
 -->
-## Solution B: Creating a *Python*-Project
+## Assignment B: Structured *Python*-Project
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-The assignment shows good practices how to create and structure a *Python*
-project. Few rules should be followed when creating a new software development.
-They generally apply, regardless of the programming language:
+The assignment shows practices how to create a structured *Python* project.
+Few rules should generally be followed, regardless of the programming language:
 
-- source code resides in the `src` directory (sub-tree) in the project
+- *source code* resides in the `src` directory (sub-tree) in the project
     directory.
 
-- test code (unit tests) is always separated from the source code and typically
+- *test code* (unit tests) is always separated from the source code and typically
     resides in a `tests` directory (sub-tree).
 
 - each, `src` and `tests`, have sub-directories to further structure the source
@@ -37,7 +36,7 @@ common).
 
 Goal of this assignment is to set-up a new *Python* project following the guidance
 from the article.
-The project will create two components, a component *"Calculator"* with methods:
+The project will create two components, a *"Calculator"* with methods:
 
 - *add(a, b)* - return the sum of *a* and *b*, 
 
@@ -83,9 +82,9 @@ Steps:
 1. Step: [*Check Project into Local git Repository*](#7-check-project-into-local-git-repository).
 
 1. Step: [*Push Project to Remote *git* Repository*](#8-push-project-to-remote-git-repository).
-
-1. Step: [*Unit Tests*](#9-unit-tests).
 <!-- 
+1. Step: [*Unit Tests*](#9-unit-tests).
+
 1. Step: [*Release*](#10-release).
     - build distributable package, actually release 'make build'
 -->
@@ -577,12 +576,16 @@ Set up remote repository with public SSH key access.
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
+<!-- 
 &nbsp;
 ---
 ### 9. Unit Tests
 
 to follow...
+-->
+
+
+
 
 <!-- 
 Create unit tests for method: *factorize(int n)* with tests:
