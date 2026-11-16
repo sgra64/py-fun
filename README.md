@@ -49,20 +49,24 @@ with methods:
 
 - *factorize( n )* - return prime factors of *n*.
 
-*"Calculator"* is a singleton component.
+*"Calculator"* is a singleton component. Python documentation is avilable for
+[*Calculator*](https://sgra64.github.io/py-fun.github.io/src.calculator.html).
 
 
 Component *"Collection"* provides *list* and *set* methods:
 
-- *contains( s, e )* - calculate the number of times element *e* is in *s*,
+- *size()* - return the number of elements in the *Collection*,
 
-- *zip(s, p)* - pair consequitive elements from *s* and *p*,
+- *contains( e )* - return if element *e* is in the *Collection*,
 
-- *pset( s )* - calculate the powerset of *s*,
+- *zip(s, p)* - return a new *Collection* with pairs zipped elements from *s* and *p*,
 
-- *perm( p )* - calculate permutations of *p*,
+- *pset()* - return the *powerset* of the *Collection*,
 
-*"Collection"* is an instantiatable component.
+- *perm()* - return *permutations* of the *Collection*,
+
+*"Collection"* is an instantiatable component. Python documentation is avilable for
+[*Collections*](https://sgra64.github.io/py-fun.github.io/src.collections.html).
 
 
 ---
@@ -82,9 +86,11 @@ Steps:
 
 1. Step: [*Extend the Calculator*](#7-extend-the-calculator).
 
-1. Step: [*Check Project into Local git Repository*](#8-check-project-into-local-git-repository).
+1. Step: [*Implement Collection*](#8-implement-collection).
 
-1. Step: [*Push Project to Remote *git* Repository*](#9-push-project-to-remote-git-repository).
+1. Step: [*Check Project into Local git Repository*](#9-check-project-into-local-git-repository).
+
+1. Step: [*Push Project to Remote *git* Repository*](#10-push-project-to-remote-git-repository).
 <!-- 
 1. Step: [*Unit Tests*](#9-unit-tests).
 
@@ -575,17 +581,14 @@ make build              # perform all build steps
 ### 5. Create the *Calculator*
 
 Create a component called *Calculator* in `src/calculator` such that it
-provides the indicated functions such that it can be imported and used in
-[*src/main.py*](src/main.py):
+can be imported and used.
 
-```py
-from .calculator import main as main_
+Module [*src/calculator/driver.py*](src/calculator/driver.py)
+implements the *main()* function of the package.
+It is imported (thus exported by the package) in
+[*src/calculator/__init__.py*](src/calculator/__init__.py).
 
-def main():
-    main_()
-```
-
-Module *src/calculator/main.py* implements the *main()* function invoked:
+Module [*src/calculator/driver.py*](src/calculator/driver.py):
 
 ```py
 from . import Calculator
@@ -604,11 +607,13 @@ the *Calculator* object. This is achieved in package-initialization
 `calculator/__init__.py`:
 
 ```py
-# export class 'Calculator' from local module './calculator.py'
 from .calculator import Calculator
 
-# export 'main()' from local './main.py'
-from .main import main
+# import 'main()' function from 'driver.py'
+from .driver import main
+
+# restrict exports including non-underscored names
+__all__ = ["Calculator"]
 ```
 
 File `__init__.py` executes when the *package* (a folder) is imported for the
@@ -770,15 +775,260 @@ expr=[
     '',
 ] if _run_list else []
 ```
-
+<!-- 
 Correct results can also be found in [*results.txt*](results.txt).
+ -->
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+&nbsp;
+---
+### 8. Implement *Collection*
+
+Review class
+[*src/collections/collection.py*](src/collections/collection.py) that defines
+a generic collection class that can accept numerical or string literals as
+a list or set (parameter: `asSet=True`) or lists and sets as elements.
+
+The driver class:
+[*src/collections/driver.py*](src/collections/driver.py)
+contains the *main()* function that creates example collections and
+outputs results:
+
+```py
+from typing import Any
+from . import Collection
+
+def main():
+    c1 = Collection('a', 'b', 'c')
+    c2 = Collection(1, 2, 3)
+    c3 = Collection(1, 2, 3, asSet=True)
+    c4 = Collection([])
+    c5 = Collection([], asSet=True)
+    c6 = Collection([1, 2, 3])
+    c7 = Collection([1, 2, 3], asSet=True)
+    c8 = Collection({})
+    c9 = Collection({}, asSet=True)
+    c10 = Collection({1, 2, 3})
+    c11 = Collection({1, 2, 3}, asSet=True)
+    # 
+    print(f' c1 = Collection(\'a\', \'b\', \'c\'):           -> {c1}')
+    print(f' c2 = Collection(1, 2, 3):                 -> {c2}')
+    print(f' c3 = Collection(1, 2, 3, asSet=True):     -> {c3}')
+    print(f' c4 = Collection([]):                      -> {c4}')
+    print(f' c5 = Collection([], asSet=True):          -> {c5}')
+    print(f' c6 = Collection([1, 2, 3]):               -> {c6}')
+    print(f' c7 = Collection([1, 2, 3], asSet=True):   -> {c7}')
+    print(f' c8 = Collection({{}}):                      -> {c8}')
+    print(f' c9 = Collection({{}}, asSet=True):          -> {c9}')
+    print(f'c10 = Collection({{1, 2, 3}}):               -> {c10}')
+    print(f'c11 = Collection({{1, 2, 3}}, asSet=True):   -> {c11}')
+
+    print(f'\nCollection.zip(c1, c2): {Collection.zip(c1, c2)}')
+
+    # print(f'\nc2.pset(): {c2.pset()}')
+    # print(f'c2.pset_gen(): {list(c2.pset_gen())}')
+    # print(f'c2.pset_gen():')
+    # for subset in c2.pset_gen():
+    #     print(f" -> {'{}' if not subset else subset}")
+    # # 
+    # print(f'\nc2.perm():')
+    # for p in c2.perm():
+    #     print(f" -> {p}")
+    # # 
+```
+
+**Task 1:** implement basic functions such as *zip()*. Ignore more
+complex functions *pset()* and *perm()* for now. Run the code.
+The following output should appear:
+
+```
+ c1 = Collection('a', 'b', 'c'):           -> ['a', 'b', 'c']
+ c2 = Collection(1, 2, 3):                 -> [1, 2, 3]
+ c3 = Collection(1, 2, 3, asSet=True):     -> {1, 2, 3}
+ c4 = Collection([]):                      -> [[]]
+ c5 = Collection([], asSet=True):          -> {()}
+ c6 = Collection([1, 2, 3]):               -> [[1, 2, 3]]
+ c7 = Collection([1, 2, 3], asSet=True):   -> {(1, 2, 3)}
+ c8 = Collection({}):                      -> [{}]
+ c9 = Collection({}, asSet=True):          -> {{}}
+c10 = Collection({1, 2, 3}):               -> [{1, 2, 3}]
+c11 = Collection({1, 2, 3}, asSet=True):   -> {{1, 2, 3}}
+
+Collection.zip(c1, c2): [('a', 1), ('b', 2), ('c', 3)]
+```
+
+Run tests in the *VSCode* IDE and in the terminal:
+
+```sh
+# run calculator tests ignoring the collection tests
+pytest -v --ignore-glob='tests/collections*'
+```
+
+
+<!-- - - - -->
+&nbsp;
+
+**Task 2:** run tests in
+[*tests/collections/test_collection.py*](tests/collections/test_collection.py)
+ignoring powerset and permutation tests (for now):
+
+```sh
+pytest -v \
+    --ignore=tests/collections/test_collection_pset.py \
+    --ignore=tests/collections/test_collection_perm.py
+```
+
+
+<!-- - - - -->
+**Task 3:** implement method *pset()* that produces the powerset of a collection:
+
+```py
+def pset(_self) -> set[set[T]]:
+    """
+    Return the power set of this Collection using backtracking.
+
+    Returns:
+        The power set of this Collection.
+    """
+    return set()
+```
+<!-- 
+```py
+def pset_gen(self) -> Iterator['set[T]']:
+    """
+    Generator that yields each subset using backtracking.
+    
+    Returns:
+        Generator object for the power set of this Collection.
+    """
+```
+ -->
+
+Un-comment driver code:
+
+```py
+print(f'\nc2.pset(): {c2.pset()}')
+print(f'c2.pset_gen(): {list(c2.pset_gen())}')
+# 
+print(f'c2.pset_gen():')
+for subset in c2.pset_gen():
+    print(f" -> {'{}' if not subset else subset}")
+```
+
+Running the code should produce the power set of collection *c2* ({1, 2, 3}):
+
+```
+c2.pset(): [set(), {3}, {2}, {2, 3}, {1}, {1, 3}, {1, 2}, {1, 2, 3}]
+c2.pset_gen(): [set(), {3}, {2}, {2, 3}, {1}, {1, 3}, {1, 2}, {1, 2, 3}]
+c2.pset_gen():
+ -> {}
+ -> {3}
+ -> {2}
+ -> {2, 3}
+ -> {1}
+ -> {1, 3}
+ -> {1, 2}
+ -> {1, 2, 3}
+```
+
+Run the tests in
+[*tests/collections/test_collection_pset.py*](tests/collections/test_collection_pset.py)
+ignoring the permutation tests:
+
+```sh
+pytest -v \
+    --ignore=tests/collections/test_collection.py \
+    --ignore=tests/collections/test_collection_perm.py
+```
+
+
+<!-- - - - -->
+
+&nbsp;
+
+**Task 4:** implement method *perm()* that produces all permutations of a collection:
+
+```py
+print(f'\nc2.perm():')
+for p in c2.perm():
+    print(f" -> {p}")
+```
+
+Running the code should produce the power set of collection *c2* ({1, 2, 3}):
+
+```
+c2.perm():
+ -> [1, 2, 3]
+ -> [1, 3, 2]
+ -> [2, 1, 3]
+ -> [2, 3, 1]
+ -> [3, 1, 2]
+ -> [3, 2, 1]
+```
+
+
+<!-- - - - -->
+
+&nbsp;
+
+**Task 5:** Run all tests in *VSCode* and in the terminal, including tests in
+[*tests/collections/test_collection_perm.py*](tests/collections/test_collection_perm.py):
+
+```sh
+pytest -v
+
+make tests
+```
+```
+pytest -v
+========================================================================================================================== test session starts ==========================================================================================================================
+platform win32 -- Python 3.12.0, pytest-8.4.2, pluggy-1.6.0 -- C:\Users\svgr2\AppData\Local\Programs\Python\Python312\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Sven1\svgr2\workspaces\cs4bd\py-fun
+collected 32 items
+
+tests/calculator/test_calculator.py::TestCalculator::test_add PASSED                                                                                                                                                                                               [  3%]
+tests/calculator/test_calculator.py::TestCalculator::test_div PASSED                                                                                                                                                                                               [  6%]
+tests/calculator/test_calculator.py::TestCalculator::test_factorize PASSED                                                                                                                                                                                         [  9%]
+tests/calculator/test_calculator.py::TestCalculator::test_invalid_string_conversion PASSED                                                                                                                                                                         [ 12%]
+tests/calculator/test_calculator.py::TestCalculator::test_mul PASSED                                                                                                                                                                                               [ 15%]
+tests/calculator/test_calculator.py::TestCalculator::test_multilingual_string_conversion PASSED                                                                                                                                                                    [ 18%]
+tests/calculator/test_calculator.py::TestCalculator::test_singleton_pattern PASSED                                                                                                                                                                                 [ 21%]
+tests/calculator/test_calculator.py::TestCalculator::test_sub PASSED                                                                                                                                                                                               [ 25%]
+tests/collections/test_collection.py::TestCollection::test_add_only_keeps_unique_set_items PASSED                                                                                                                                                                  [ 28%]
+tests/collections/test_collection.py::TestCollection::test_constructor_accepts_list_and_set_iterables PASSED                                                                                                                                                       [ 31%]
+tests/collections/test_collection.py::TestCollection::test_constructor_accepts_variadic_items_and_set_mode PASSED                                                                                                                                                  [ 34%]
+tests/collections/test_collection.py::TestCollection::test_contains_and_add PASSED                                                                                                                                                                                 [ 37%]
+tests/collections/test_collection.py::TestCollection::test_contains_and_add_in_set PASSED                                                                                                                                                                          [ 40%]
+tests/collections/test_collection.py::TestCollection::test_perm_gen_of_empty_collection_yields_empty_permutation PASSED                                                                                                                                            [ 43%]
+tests/collections/test_collection.py::TestCollection::test_perm_gen_preserves_duplicate_positions PASSED                                                                                                                                                           [ 46%]
+tests/collections/test_collection.py::TestCollection::test_perm_gen_yields_permutations_lazily PASSED                                                                                                                                                              [ 50%]
+tests/collections/test_collection.py::TestCollection::test_perm_of_empty_collection_contains_empty_permutation PASSED                                                                                                                                              [ 53%]
+tests/collections/test_collection.py::TestCollection::test_perm_preserves_duplicate_positions PASSED                                                                                                                                                               [ 56%]
+tests/collections/test_collection.py::TestCollection::test_perm_returns_all_full_length_permutations PASSED                                                                                                                                                        [ 59%]
+tests/collections/test_collection.py::TestCollection::test_repr_displays_set_braces PASSED                                                                                                                                                                         [ 62%]
+tests/collections/test_collection.py::TestCollection::test_zip_returns_pairs_and_stops_at_shorter_collection PASSED                                                                                                                                                [ 65%]
+tests/collections/test_collection.py::TestCollection::test_zip_with_empty_collection_returns_empty_collection PASSED                                                                                                                                               [ 68%]
+tests/collections/test_collection_perm.py::TestCollection::test_perm_gen_of_empty_collection_yields_empty_permutation PASSED                                                                                                                                       [ 71%]
+tests/collections/test_collection_perm.py::TestCollection::test_perm_gen_preserves_duplicate_positions PASSED                                                                                                                                                      [ 75%]
+tests/collections/test_collection_perm.py::TestCollection::test_perm_gen_yields_permutations_lazily PASSED                                                                                                                                                         [ 78%]
+tests/collections/test_collection_perm.py::TestCollection::test_perm_of_empty_collection_contains_empty_permutation PASSED                                                                                                                                         [ 81%]
+tests/collections/test_collection_perm.py::TestCollection::test_perm_preserves_duplicate_positions PASSED                                                                                                                                                          [ 84%]
+tests/collections/test_collection_pset.py::TestCollection::test_pset_backtracks_over_each_set_item PASSED                                                                                                                                                          [ 87%]
+tests/collections/test_collection_pset.py::TestCollection::test_pset_gen_of_empty_collection_yields_empty_set PASSED                                                                                                                                               [ 90%]
+tests/collections/test_collection_pset.py::TestCollection::test_pset_gen_yields_all_subsets_without_duplicate_values PASSED                                                                                                                                        [ 93%]
+tests/collections/test_collection_pset.py::TestCollection::test_pset_of_empty_collection_contains_empty_set PASSED                                                                                                                                                 [ 96%]
+tests/collections/test_collection_pset.py::TestCollection::test_pset_returns_all_subsets_without_duplicate_values PASSED                                                                                                                                           [100%]
+========================================================================================================================== 32 passed in 0.20s ===========================================================================================================================
+```
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 &nbsp;
 ---
-### 8. Check Project into Local *git* Repository
+### 9. Check Project into Local *git* Repository
 
 Create local *git* repository and initialize with *empty root commit*:
 
@@ -831,7 +1081,7 @@ f3fd353 add .vscode
 
 &nbsp;
 ---
-### 9. Push Project to Remote *git* Repository
+### 10. Push Project to Remote *git* Repository
 
 Find out how to push a locally created project into a remote *git* repository.
 Set up remote repository with public SSH key access.
