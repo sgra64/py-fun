@@ -1,4 +1,4 @@
-class Calculator(object):
+class Calculator:
     """
     Singleton Calculator instance performs basic calculations on numbers.
 
@@ -6,6 +6,8 @@ class Calculator(object):
     numbers, e.g. "123" or "1.600" or as Latin numbers "X", as single digit
     words: "three" (English, 3), "cinco" (Spanish, 5), "семь" (Russian, 7),
     "X" (Latin, 10) or "三" (Chinese, sān 3).
+
+    See: https://sgra64.github.io/py-fun.github.io/src.calculator.html.
     """
 
     def add(_self, a, b):

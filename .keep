@@ -18,6 +18,7 @@
  ! -path ./.devcontainer\*
  ! -path ./markup\*
  ! -path ./tmp\*
+ ! -path ./branches\*
 
  # exclude files
  ! -name .keep

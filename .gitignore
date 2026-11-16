@@ -18,6 +18,7 @@ dist/
 *temp/
 *.tmp
 *.temp
+branches/
 
 # log files and directories
 *log/
