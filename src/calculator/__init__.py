@@ -1,11 +1,15 @@
-# export class 'Calculator' from local module './calculator.py'
-from .calculator import Calculator
+try:
+    # attempt to import class 'Calculator' from the implementation module
+    # 'type: ignore' avoids VSCode marking if module is not present
+    from .calculator_impl import Calculator # type: ignore
 
-# from src.import_module import import_module
-# # # export class 'Calculator' from local module './calculator.py'
-# # # or, if present, from implementation module './calculator_impl.py'
-# mod=import_module(__file__, 'calculator', 'calculator_impl')
-# Calculator=mod.Calculator
+except ImportError:
+    # no implementation module is present, import from the default module
+    from .calculator import Calculator
 
-# export 'main()' from local './main.py'
-from .main import main
+# import 'main()' function from 'driver.py'
+from .driver import main
+
+
+# restrict exports including non-underscored names
+__all__ = ["Calculator"]
