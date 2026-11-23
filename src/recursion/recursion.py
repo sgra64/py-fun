@@ -36,9 +36,19 @@ class Recursion:
         return 0
 
 
-    def fib(self, _n, memo=None) -> int:
+    def fib(self, _n) -> int:
         """
         Return value of n-th Fibonacci number.
+        - input: n=8
+        - output: 21
+        """
+        # your code
+        return 0
+
+
+    def fib_memo(self, _n, memo=None) -> int:
+        """
+        Return value of n-th Fibonacci number using memoization.
         - input: n=8
         - output: 21
         """

@@ -7,17 +7,17 @@ def main():
     """
     run_choices = [
         1,      # Challenge 1, Simple recursion: sum numbers
-        2,      # Challenge 2, Fibonacci numbers
-        21,     # Challenge 2.1, fig_gen()
-        22,     # Challenge 2.2, memoization, fib(60), fib(90)
-        3,      # Challenge 3, Permutation
-        4,      # Challenge 4, Powerset
-        5,      # Challenge 5, Finding matches, find()
-        51,     # Challenge 5.1, find_adjacent() pairs
-        52,     # Challenge 5.2, find_pairs() that add to n
-        6,      # Challenge 6, Find all combinations that add to n
-        61,     # Challenge 6.1, Find all in medium set
-        7       # Challenge 7, Hard problem finding numbers
+        # 2,      # Challenge 2, Fibonacci numbers
+        # 21,     # Challenge 2.1, fig_gen()
+        # 22,     # Challenge 2.2, memoization, fib(60), fib(90)
+        # 3,      # Challenge 3, Permutation
+        # 4,      # Challenge 4, Powerset
+        # 5,      # Challenge 5, Finding matches, find()
+        # 51,     # Challenge 5.1, find_adjacent() pairs
+        # 52,     # Challenge 5.2, find_pairs() that add to n
+        # 6,      # Challenge 6, Find all combinations that add to n
+        # 61,     # Challenge 6.1, Find all in medium set
+        # 7       # Challenge 7, Hard problem finding numbers
     ]
 
     n1 = Recursion()
