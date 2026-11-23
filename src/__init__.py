@@ -3,4 +3,4 @@
 # in __init__.py, but what is exported from the package.
 # 
 from .calculator import Calculator, main
-from .collections import Collection
+# from .collections import Collection
